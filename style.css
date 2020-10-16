@@ -1,3 +1,12 @@
+/* 
+Todo: 
+
+Screen reader
+px to rems
+Refactor js into functions
+Pretty up form elements
+*/
+
 :root {
   --color-light: #fdfdfd;
   --color-dark: #27474e;
@@ -10,6 +19,13 @@
 
   --primary-font: 'Saira Condensed', sans-serif;
   --secondary-font: 'Asap', sans-serif;
+  --transition: 0.1s linear;
+}
+
+@media (prefers-reduced-motion) {
+  :root {
+    --transition: 0s linear;
+  }
 }
 
 body {
@@ -35,8 +51,8 @@ body > * {
 }
 
 /* do not remove marker styles if javascript is not running */
-.progress[data-js] li::marker {
-  content: '';
+.progress[data-init] {
+  list-style: none;
 }
 
 .progress .checkmark {
@@ -48,29 +64,44 @@ body > * {
   left: -2rem;
   top: 1.5rem;
   border: 1px solid var(--color-primary);
+  transition: border-color, background var(--transition);
+
 }
 
-.progress li[data-previous]::before {
+/* not last child so it doesn't go off screen */
+.progress li::before {
   content: '';
   position: absolute;
   border-left: 2px solid var(--color-primary);
-  height: calc(100% + 20px); /* account for margin on list item */
+  height: 0;
   top: 1.5rem; /* same as checkmark top positioning */
   left: -1.5rem;
+  transition: height var(--transition);
 }
 
-.progress .checkmark svg {
+/* not last child so it doesn't go off screen */
+.progress li[data-state="previous"]:not(:last-child)::before {
+  height: calc(100% + 20px); /* account for margin on list item */
+}
+
+.progress svg {
+  opacity: 0;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  transition: opacity var(--transition);
 }
 
-.progress li[data-current] .checkmark {
+.progress li[data-state="previous"] svg {
+  opacity: 1;
+}
+
+.progress li[data-state="current"] .checkmark {
   background: var(--color-primary-glare);
 }
 
-.progress li[data-upcoming] .checkmark {
+.progress li[data-state="upcoming"] .checkmark {
   border-color: var(--color-secondary);
   background: var(--color-secondary-glare);
 }

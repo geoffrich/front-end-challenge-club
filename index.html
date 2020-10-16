@@ -17,17 +17,20 @@
   <body>
     <ol class="progress">
       <li>Your basket</li>
-      <li>Your details</li>
-      <li data-current="true">Payment</li>
-      <li>Order complete</li>
+      <li>Your details and also some other stuff you probably skipped over</li>
+      <li aria-current="step">Payment</li>
+      <li>Order complete (no turning back now)</li>
+      <li>Crushing regret</li>
     </ol>
+    
+    <form>
+      <label for="step">New item</label>
+      <input type="text" id="step">
+      <button type="button">Add another!</button>
+      <button type="button" id="increment">Increment step</button>
+      <button type="button" id="decrement">Decrement step</button>
+    </form>
 
-    <!-- <ol>
-        <li>Your basket</li>
-        <li>Your details</li>
-        <li data-current="true">Payment</li>
-        <li>Order complete</li>
-    </ol> -->
     <script src="./main.js"></script>
   </body>
 </html>
