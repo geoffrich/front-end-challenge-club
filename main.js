@@ -52,7 +52,8 @@ function getListItemContents(text, index) {
 function getEyebrow(index) {
   const counter = (index + 1).toString().padStart(2, '0');
   return `
-    <span class="eyebrow" data-counter=${counter}>
+    <span class="eyebrow">
+      <span class="counter" aria-hidden="true">${counter}</span>
       ${numberWords[index] ? `Step ${numberWords[index]}` : `Step ${index + 1}`}
     </span>
   `;
@@ -60,6 +61,13 @@ function getEyebrow(index) {
 
 function handleSubmit(e) {
   e.preventDefault();
+  const form = document.querySelector('form');
+
+
+  if (!form.reportValidity()) {
+    return;
+  }
+
   const input = document.querySelector('input');
   const list = document.querySelector('.progress');
   const newItem = document.createElement('li');
@@ -73,6 +81,7 @@ function handleSubmit(e) {
 
   newItem.innerHTML = getListItemContents(input.value, list.children.length);
   list.appendChild(newItem);
+  newItem.scrollIntoView();
 }
 
 function increment() {

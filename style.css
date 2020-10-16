@@ -28,25 +28,97 @@ Pretty up form elements
   }
 }
 
+*, *::before, *::after {
+  /* originally applied to body, oops */
+  box-sizing: border-box;
+  color: var(--color-dark);
+}
+
 body {
   font-family: var(--primary-font);
-  box-sizing: border-box;
+}
+
+main {
   display: grid;
   grid-template-columns: 1fr min(65ch, 100%) 1fr;
 }
 
-body > * {
+main > * {
   grid-column: 2;
 }
 
+
+button {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--color-light);
+  font-family: var(--secondary-font);
+  cursor: pointer;
+  text-align: center;
+  padding: .5rem 1rem;
+  border: none;
+  margin: 0 .3em .3em 0;
+  border-radius: .12em;
+  font-size: 1rem;
+  background: var(--color-dark);
+}
+
+button:hover,
+button:focus {
+  /* filter trick from https://weblog.west-wind.com/posts/2020/Jul/28/Using-the-brightness-CSS-Filter-to-generically-highlight-Content */
+  filter: brightness(150%) saturate(140%);      
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+label {
+  display: inline-block;
+  font-family: var(--secondary-font);
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"] {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  border: 1px solid var(--color-secondary);
+  border-radius: .25rem;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"]:focus {
+  border-color: #80bdff;
+  outline: 0;
+}
+
+input[type="text"]:invalid {
+  box-shadow: none;
+}
+
+form {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 2;
+  background: var(--color-light);
+  padding: 1rem;
+  border: 1px solid var(--color-mid);
+  border-radius: 5px;
+}
+
+/* progress block */
 .progress {
   padding: 1rem 4rem; /* extra padding to account for absolutely-positioned elements */
-  border-radius: 20px;
+  border-radius: 1.25rem;
   box-shadow: var(--shadow);
 }
 
 .progress li {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   position: relative;
 }
 
@@ -65,7 +137,6 @@ body > * {
   top: 1.5rem;
   border: 1px solid var(--color-primary);
   transition: border-color, background var(--transition);
-
 }
 
 /* not last child so it doesn't go off screen */
@@ -81,7 +152,7 @@ body > * {
 
 /* not last child so it doesn't go off screen */
 .progress li[data-state="previous"]:not(:last-child)::before {
-  height: calc(100% + 20px); /* account for margin on list item */
+  height: calc(100% + 1.25rem); /* account for margin on list item */
 }
 
 .progress svg {
@@ -110,27 +181,26 @@ body > * {
   display: block;
   text-transform: uppercase;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1;
   color: var(--color-mid);
   position: relative;
 }
 
-.progress .eyebrow::before {
-  content: attr(data-counter);
-  font-size: 23px;
+.progress .eyebrow .counter {
+  font-size: 1.5rem;
   font-weight: 900;
   color: var(--color-secondary-glare);
   position: absolute;
-  left: -10px;
-  top: -7px;
+  left: -0.625rem;
+  top: -0.4375rem;
   z-index: -1;
 }
 
 .progress .title {
   font-family: var(--secondary-font);
   font-weight: 700;
-  font-size: 23px;
+  font-size: 1.5rem;
   line-height: 1;
   color: var(--color-dark);
 }
